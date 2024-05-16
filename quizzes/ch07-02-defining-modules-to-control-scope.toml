@@ -9,26 +9,27 @@ prompt.distractors = [
 ]
 
 [[questions]]
-type="ShortAnswer"
-prompt.prompt = "What can you add to line this to make it compile?
+type="MultipleChoice"
+prompt.prompt = "
+Does this compile?:
 ```rust
-fn add_num(n1: u16, n2: u16) -> u16 {
-    let result: u16 = n1 + n2;
-    result
-}
+//in src/menu/desert.cairo
+#[derive(Drop, Debug)]
+pub struct Icecream{flavour: felt252}
 
-mod calculator {
-    fn calculate_sum(num1: u16, num2: u16){
-        add_num(num1, num2);
-    }
-    fn calculate(n1: u8) -> bool {
-        if n1 > 20 {
-            return true;
-        }
-        return false;
-}
+//in src/menu.cairo
+pub mod desert;
+
+//in src/lib.cairo
+pub mod restaurant;
+use restaurant::menu::Desert;
+
+fn main() {
+    let order = Icecream {flavour: 'vanilla'};
+    println!("I'd like to order  {:?}!", order);
 }
 ```
 "
-answer.answer = "super::"
-context = "The function calculate_sum, which is defined in the calculator module, invokes the add_num function that is defined in the parent module. This is achieved by specifying the path to add_num using the super:: prefix."
+answer.answer = "Yes"
+prompt.distractors = ["No"]
+context = "fields in structs need to be declared as public so that they are visible."
