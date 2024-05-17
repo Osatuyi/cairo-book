@@ -1,0 +1,21 @@
+[[questions]]
+type="Tracing"
+prompt.program = """
+pub mod parent {
+    pub fn a() {}
+    fn b() {}
+    pub mod child {
+      pub fn c() {}
+    }
+  }
+
+use parent::{a, b, child};
+
+fn main() {
+    // ...
+    a()
+}
+"""
+answer.doesCompile = false
+answer.lineNumber = 9
+context = "b has to be declared as public to in order to be brought into scope"
